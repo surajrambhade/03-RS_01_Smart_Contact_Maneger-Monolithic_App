@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+		integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+		integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<!-- Optional JavaScript; choose one of the two! -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+		crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+	<title th:text="${title}"></title>
+
+
+	
+
+</head>
+
+<body>
+
+
+
+
+	<!-- narbar  -->
+	<nav class="fixed-top navbar navbar-expand-lg navbar-dark  bg-primary">
+
+		<a class="navbar-brand" href="#">Smart Contact Manager</a>
+
+
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+
+			<ul class="navbar-nav ml-auto text-uppercase">
+				<!-- mr-aoto mai right mai aa jate sare home about etc -->
+
+
+				<li class="nav-item active">
+					<a class="nav-link" href="#" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+				</li>
+
+				<li class="nav-item ">
+					<a class="nav-link" href="#" tabindex="-1" aria-disabled="true"><span th:text="${user.name}">
+						</span> <span class="sr-only">(current)</span></a>
+				</li>
+
+				<!--	<li class="nav-item">
+					<a class="nav-link disabled" href="/user/index" th:href="@{/user/index}" tabindex="-1"
+						aria-disabled="true">Login</a>
+				</li>  -->
+
+
+
+				<li class="nav-item">
+					<!-- nav-link disabled  for disable link -->
+					<a class="nav-link " href="#" tabindex="-1" aria-disabled="true" th:href="@{/logout}">Logout</a>
+				</li>
+			</ul>
+
+		</div>
+	</nav>
+
+
+	<!-- End Navbar -->
+	<!-- sidebar -->
+	<div class="sidebar mt-2">
+		<span onclick="toggleSideBar()" class="crossBtn">&times;</span>
+
+		<a id="home-link" href="#" th:href="@{/user/index}" class="item"><i class="fa-solid fa-house "></i> Home</a>
+		<a id="contact-link" href="#" th:href="@{/user/show-contacts/0}" class="item"><i
+				class="fa-solid fa-address-book"></i> View
+			Contacts</a>
+		<a id="add-link" href="#" th:href="@{/user/add-contact}" class="item"><i class="fa-solid fa-plus"></i> Add
+			Contact</a>
+		<a id="profile-link" href="#" th:href="@{/user/profile}" class="item"><i class="fa-solid fa-user"></i> Your
+			Profile</a>
+		<a id="settings-link" href="#" th:href="@{/user/settings}" class="item"><i class="fa-solid fa-gears"></i>
+			Setting</a>
+		<a href="#" th:href="@{/logout}" class="item"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+
+		<div class="divider">
+		</div>
+
+
+	</div>
+	<!-- End of sidebar -->
+	<!-- Content Area-->
+	<div class="content mt-5">
+		<i onclick="toggleSideBar()" class="fas fa-bars m-3">.</i>
+		<!-- massage dispaly -->
+		<div th:if="${session.message}" class="container">
+			<div th:classappend="${'alert-'+session.message.type}" class="alert text-center" role="alert">
+
+				<span th:text="${session.message.content}"> </span>
+
+			</div>
+
+			<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+		</div>
+
+		<div th:replace="${content}"></div>
+	</div>
+	<!-- End Content Area-->
+
+	<!-- Optional JavaScript; choose one of the two! -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+		crossorigin="anonymous"></script>
+
+	<!-- New type alert jo Delete krna pr chalega -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script>
+		function deleteContact(Cid) {
+			swal({
+				title: "Are you sure?",
+				text: "You want to delete this contact... ",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+				.then((willDelete) => {
+					if (willDelete) {
+						window.location = "/user/delete/" + Cid;
+					} else {
+						swal("Your contact is safe!");
+					}
+				});
+
+		}
+	</script>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+	<script th:src="@{/js/script.js}" />
+	</script>
+
+</body>
+
+</html>
